@@ -57,7 +57,7 @@ module Wrong
       sexp = begin
         unless @block.nil? or @block.is_a?(String) or !Object.const_defined?(:Sourcify)
           # first try sourcify
-          @block.to_sexp[3] # the [3] is to strip out the "proc {" sourcify adds to everything
+          @block.to_sexp(:strip_enclosure => true, :attached_to => /^(.*\W|)(assert|deny)\W/)
         end
       rescue ::Sourcify::MultipleMatchingProcsPerLineError, Racc::ParseError, Errno::ENOENT => e
         # fall through
